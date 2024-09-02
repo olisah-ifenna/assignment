@@ -1,0 +1,85 @@
+A server is a platform used or storing, manging and processing data
+middleware is a fuction that recieves the request and response objects. enables communication and data management 
+
+The express.static allows you to serve static files like HTML, CSS, and images, from a directory
+path.join used to combine multiple parts with a child path
+__dirname returns the directory name of the current module
+({ extended: false }):allows to choose between parsing the URL-encoded data with the querystring library(when false) or the qs library (when true)
+Querystring is a common way to pass data through a URL
+
+encryption:to protect data from unauthorized access by converting plain readable data to cipher text using an encryption key and algorithm
+encoding:convert data into a different format for efficient storage , transform data into coded representation using encoding scheme(Base64, UTF-8)
+.hash: to transform plaintext data into secure fixed length
+
+url encoding used in API calls(medium they interact) to pass data within a query string (?)
+
+Mongoose is an ODM for MongoDB, Cloudinary is a cloud-based image and video management service, and others provide functionalities like handling file uploads, sessions, environment variables, etc.
+
+dotenv.config(): 
+
+Models (User, Userfeed, CreateBlog): These represent MongoDB collections and are used for interacting with the database.
+ 
+difference
+MongoDB stores flexible data 
+mongoose is a node js library adds structure and consistency
+
+
+domain is used to catch outstanding errors
+directory is a disk file that contains reference information to other files in simple terms its a folder
+
+token: builds for house tokens to write for program could be a keyword , identifier, or symbol
+
+req.params when you have dynamic segments in your route patterns
+req.query when you want to retrieve data from query string
+req.body data sent in req body
+
+next is used to pass control to the next middleware and continue executing current functionalities
+return next: to ensure no further code executes after passing control
+return:ends fuction execution and specifies a value to the fuction caller
+
+statements:instructions that are executed by the browser or Node js
+if: to specify a block of code to be executed if the condition is true
+else if: to specify a new condition is false
+
+try: code that might cause exception
+catch:code that handles the exception
+finally:code that always run whether an exception occured or not
+tryCatch: lets you specify hanlder functions that control what happens wen a condition is signalled
+
+syntax errors
+custom error classes
+range errors
+error
+reference errors
+type error
+system error
+global handling error
+eval error
+formatting errpr
+operational error
+
+res.status sets HTTP for the response
+
+HTTP used to indicate the action an API client will perform
+application programming interface: allows different systems to communicate and share data
+http request: used to retrieve data from API, fetch html from website
+
+promises are object that represent the eventual completion or failure of an asynchronous operational
+
+findOne:returns only one document that satisfies the criteria entered
+find: returns all occurrences in the selection
+
+data type
+primitive
+string, number, boolean symbol
+non-primitive
+array
+
+JSON.parse converts to object
+JSON.stringify converts to string 
+
+bcrypt.compare compares the password in the login with the password in the database
+jwt.sign:signature is used to verify the message wasn't changed along the way
+httpOnly: prevents client-side scripts from capturing data stored on the cookies
+diskStorage: diskStorage engine gives you full control on storing files to disk
+null: an intentional abscenceof a value 

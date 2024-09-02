@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+#table{
+    width: 80%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 20px 10px white;
+}
+
+#table thead{
+    background-color: white;
+    color: black;
+}
+
+#table th, #table td{
+    padding: 12px;
+    text-align: left;
+    border:  1px solid black;
+}
+
+#table tr:nth-child(even){
+    background-color: white;
+}
+
+#table tr:hover {
+    background-color: white;
+}
+
+
+
+

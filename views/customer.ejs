@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/cuss.css">
+</head>
+<body>
+    <table id="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0; i<customer.length; i++) {%>
+                <tr>
+                    <td><%= customer[i]['name'] %></td>
+                    <td><%= customer[i]['email'] %></td>
+                    <td><%= customer[i]['message'] %></td>
+                </tr>    
+            <% } %>
+        </tbody>       
+    </table>
+</body>
+</html>

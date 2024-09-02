@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/general.css">
+</head>
+<body>
+    <div class="blog-container">
+        <div class="blog-grid">
+            <% for(var i=0; i<about.length; i++) {%>
+        <div class="blog-entry">
+            <div class="blog-image-container">
+                <img src="<%= about[i]['blogimg'] %>" alt="" style="width: 100%;">
+            </div>
+            <div class="text con" style="margin-top: 10%; padding-left: 15%">
+                <h3 class="blog-title"><%= about[i]['title'] %></h3>
+                <h3 class="blog-description"><%= about[i]['blogDescription'] %></h3>
+                <h3 class="blog-category"><%= about[i]['blogCategory'] %></h3>
+            </div>
+        </div>
+        <% } %>
+        </div>
+        </div>   
+</body>
+</html>

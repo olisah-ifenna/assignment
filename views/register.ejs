@@ -6,17 +6,37 @@
     <title>Register User</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<div class="form-container">
     <form action="/registeruser" method="post">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" placeholder="name"><br>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="email"><br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="password"><br>
-        <label for="confirmpassword">Confirm Password</label>
-        <input type="password" name="cpassword" id="confirmpassword" placeholder="confirm password"><br>
-        <input type="submit" value="Register">
+        <h2>REGISTER HERE!</h2>
+        
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Confirm Password</label>
+            <input type="password" id="confirmpassword" name="cpassword" required></input>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="REGISTER" class="button">
+        </div>
+
+        <div><a href="/login" style="text-decoration: none; font-size: smaller;">already have an account?</a></div>
     </form>
-</body>
+</div>
 </html>
+
+
