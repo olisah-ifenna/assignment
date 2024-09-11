@@ -82,4 +82,8 @@ bcrypt.compare compares the password in the login with the password in the datab
 jwt.sign:signature is used to verify the message wasn't changed along the way
 httpOnly: prevents client-side scripts from capturing data stored on the cookies
 diskStorage: diskStorage engine gives you full control on storing files to disk
-null: an intentional abscenceof a value 
+null: an intentional abscence of a value 
+
+require: is used to load an external module
+
+call bac

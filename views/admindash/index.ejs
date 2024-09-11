@@ -42,8 +42,9 @@
                   <i class="icon-search"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
-              <input type="submit" value="search" style="border-radius: 10px;">
+              <form action="/search" method="get" id="formSearch">
+              <input type="text" class="form-control" id="searchin" name="query" placeholder="Search now" aria-label="search" aria-describedby="search">
+            </form>
             </div>
           </li>
         </ul>
@@ -74,19 +75,7 @@
                     <i class="ti-settings mx-0"></i>
                   </div>
                 </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Settings</h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    Private message
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-info">
-                    <i class="ti-user mx-0"></i>
-                  </div>
-                </div>
+        
                 <div class="preview-item-content">
                   <h6 class="preview-subject font-weight-normal" id="customer">Customer's Feedback</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
@@ -245,29 +234,32 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="icon-layout menu-icon"></i>
-              <span class="menu-title">Blogs</span>
+              <span class="menu-title">Work Input</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
                 <li><button id="create">Create Blog</button></li>
-                <li><button id="projects">Projects</button></li>
-                <li><button id="services">Services</button></li>
-                <li><button id="about">About</button></li>
+                <li><button id="view">View ALL</button></li>
+                <li><button id="id">DELETE</button></li>
+
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="icon-columns menu-icon"></i>
-              <span class="menu-title">Category</span>
+              <span class="menu-title">Flex</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li><button id="view">View ALL</button></li>
-                <li><button id="title">DELETE</button></li>
-                <li><button id="management">Management</button></li>
+                <li><button id="projects">Projects</button></li>
+                <li><button id="services">Services</button></li>
+                <li><button id="about">About</button></li>
+                <li><button id="blog">Blog</button></li>
+              
+                
               </ul>
             </div>
           </li>
@@ -275,19 +267,19 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="icon-grid-2 menu-icon"></i>
-              <span class="menu-title">Profile Settings</span>
+              <span class="menu-title"> Admin Management</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li><button>Customer Info</button></li>
+                <li><button id="management">Managements</button></li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
               <i class="icon-contract menu-icon"></i>
-              <span class="menu-title">User Pages</span>
+              <span class="menu-title">Referrals</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="icons">
@@ -319,11 +311,11 @@
          <img src="img/uploaded/dash.jpg" alt="">
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024.  Premium <a href="https://www.bootstrapdash.com/" target="_blank"></a> All rights reserved.</span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.bootstrapdash.com/" target="_blank"></a> All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a href="https://www.themewagon.com/" target="_blank">Themewagon</a></span> 
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a href="https://www.themewagon.com/" target="_blank">WROMM</a></span> 
           </div>
         </footer> 
         <!-- partial -->

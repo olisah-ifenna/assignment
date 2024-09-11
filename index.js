@@ -2,6 +2,7 @@ const express = require("express");  //Express is a web framework
 const server = express();
 const cloudinary = require("cloudinary").v2;
 const mongoose = require("mongoose"); //ODM
+const mongodb = require ("mongodb");
 const cors = require("cors");  //a security feature that restrict web browsers to make requests to a different domain than the one serving the web page.
 const bodyParser = require("body-parser");  //to parse(analyze or break up) incoming http request in a middleware This is crucial for handling data submitted through HTML forms, JSON data, and other formats.
 const nodemailer = require("nodemailer");
@@ -27,13 +28,13 @@ server.use(
     session({
         secret: "keyboard cat",
         resave: false,
-        saveUninitialized: true,   //saveUninitialized. Forces a session that is “uninitialized” to be saved to the store express, mongoose,
+        saveUninitialized: true,    
     })
 );
 
 // View Engine Setup
 server.set("views", path.join(__dirname, "views"));
-server.set("view engine", "ejs");
+server.set("view engine", "ejs");              //simplifies renderig
 // read .env file
 const PORT = process.env.PORT || 8000;
 const DB_URL = process.env.DB_URL;
@@ -52,7 +53,7 @@ cloudinary.config({
 // JWT Middleware
 const verifyToken = (req, res, next) => {
     const token = req.cookies.token;
-    if (!token) {                                       //switch
+    if (!token) {                              
         return res.render("login");
     }
     try {
@@ -99,7 +100,7 @@ server.post("/registeruser", async (req, res) => {
     if (userExist) {
         return res.status(422).json({ error: "User already exists" });
     }else{
-        const hash = await bcrypt.hash(password, 10);
+        const hash = await bcrypt.hash(password, 10);       //hash function bcrypt library
     const profile = {
         name: name,
         email: email,
@@ -131,8 +132,8 @@ server.post("/login", async (req, res) => {
     if (savedUser.isAdmin) {
         const match = await bcrypt.compare(password, savedUser.password);
         if (match) {
-            const token = jwt.sign({ _id: savedUser._id }, "secretKey");
-            res.cookie("token", token, { httpOnly: true });
+            const token = jwt.sign({ _id: savedUser._id }, "secretKey");     //payload(chunks of data) and secretKey
+            res.cookie("token", token, { httpOnly: true });              //accessed by the server alone
             req.session.user = token;
             res.redirect("admin");
         } else {
@@ -155,10 +156,6 @@ server.get("/index", (req, res) => {
 });
 
 
-server.get("/blog", (req, res) => {
-    res.render("blog");
-});
-
 // Image Upload
 const imgPath = path.join(__dirname, 'public/img/uploaded');
 const storage = multer.diskStorage({
@@ -169,11 +166,12 @@ const storage = multer.diskStorage({
         callback(null, file.originalname);
     },
 });
-const upload = multer({ storage });
+const upload = multer({ storage });  //storage tells multer to store files on disc
 
 server.post("/blog", upload.single("imgupload"), async (req, res) => {
-    const { title, blogCategory, blogDescription, number } = req.body;
+    const { title, blogCategory, blogDescription, number, author} = req.body;
     const blogimge = req.file.path;
+
 
     try {
         const result = await cloudinary.uploader.upload(blogimge, {
@@ -185,12 +183,12 @@ server.post("/blog", upload.single("imgupload"), async (req, res) => {
         }
         // verify image type
         const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-        if (!allowedTypes.includes(req.file.mimetype)) {
+        if (!allowedTypes.includes(req.file.mimetype)) {    //multipurpose internet mail extension
             return res.status(400).json({ error: "Invalid image type" });
         }
         
         const blogimg = result.secure_url;
-        if (!title || !blogCategory || !blogDescription) {
+        if (!title || !blogCategory || !blogDescription || !number ||!author) {
             return res.status(400).json({ error: "Fill all required fields" });
         }
 
@@ -204,10 +202,12 @@ server.post("/blog", upload.single("imgupload"), async (req, res) => {
             blogCategory,
             blogDescription,
             blogimg,
+            number,
+            author
         });
 
         if (newBlog) {
-            res.send("Blog Created Successfully");
+            res.render("Admin");
         }
     } catch (error) {
         console.error(error);
@@ -256,6 +256,16 @@ server.get("/servicedash",  async(req, res) => {
     res.render("servicedash", { services });
 });
 
+server.get("/blog", async (req, res) => {
+    const blog = await CreateBlog.find({ blogCategory: "blog" });
+    res.render("blog", { blog });
+});
+
+server.get("/blogdash",  async(req, res) => {
+    const blog = await CreateBlog.find({ blogCategory: "blog" });
+    res.render("blogdash", { blog });
+});
+
 server.get("/customer", async (req, res) => {
     const customer = await Userfeed.find();
     res.render("customer", { customer: customer });
@@ -280,7 +290,7 @@ server.post("/contact", async (req, res) => {
     }
 
     await Userfeed.create({ name, email, message, subject });
-    res.send("Thank you for your feedback");
+    res.render("contact");
 });
 
 server.get("/delete", (req, res) => {
@@ -290,26 +300,48 @@ server.get("/delete", (req, res) => {
 server.post("/delete", async (req, res) => {
     const { email } = req.body;
     await User.deleteOne({ email }).then(() => {
-        res.send("User deleted successfully");
+        res.redirect("admin");
     }).catch(err => console.error(err));
 });
 
-server.get("/del", (req, res) => {
-    res.render("del");
-});
 
-server.post("/del", async (req, res) => {
-    const { title } = req.body;
-    await User.deleteOne({ title }).then(() => {
-        res.send("Blog deleted successfully");
-    }).catch(err => console.error(err));
-});
 
+server.get("/deletee", async (req, res)=>{
+    const dblog = CreateBlog.find()
+    const adblog = []
+    for await (const doc of dblog){
+    adblog.push(doc)
+}
+    res.render("deletee", { blog : adblog });
+})
+
+server.post("/deletee", async (req, res) => {
+let id =  req.body.id.trim()
+id = new mongodb.ObjectId(id);
+await CreateBlog.deleteOne({ _id:id });
+res.redirect("admin")
+});
 
 server.post("/logout", (req, res) => {
     res.clearCookie("token");
     res.redirect("/login");
 });
+
+server.get("/search", async(req, res)=>{
+    const searchit = req.query.query;
+    console.log(searchit)
+    if(searchit == "undefined" || searchit == ""){
+        res.send("no data to look up for")
+    }try{
+        const look = await CreateBlog.find({
+            title: {$regex: new RegExp(searchit, 'i')}
+        });
+        res.render("search", {look, searchit})
+    }catch(err){
+        console.error(err);
+        res.status(500).send("Server Error")
+    }
+})
 
 // Database Connection Events
 const db = mongoose.connection;
@@ -325,7 +357,7 @@ db.once("open", () => {
 db.on("close", () => {
     console.log("Connection closed");
 });
-     // send mail code
+//     //  send mail code
 // const transporter = nodemailer.createTransport({
 //     host: "smtp.gmail.com",
 //     port: 587,
@@ -341,10 +373,10 @@ db.on("close", () => {
 //   async function main(senderemail, receiveremail) {
 //     // send mail with defined transport object
 //     const info = await transporter.sendMail({
-//       from: `"abiodun site" ${senderemail}`, // sender address
+//       from: `"JessConstruct" ${senderemail}`, // sender address
 //       to: `${receiveremail}`, // list of receivers
 //       subject: "Welcome To Our Product Page", // Subject line
-//       text: "Hello world?", // plain text body
+//       text: "You deserve the best and affordable rides", // plain text body
 //     //   html: "<b>Hello world?</b>", // html body
 
 //     });
@@ -354,4 +386,35 @@ db.on("close", () => {
 //   }
 // // end mail
     
+
+// const transporter = nodemailer.createTransport({
+//     host: "smtp.gmail.com",
+//     port: 587,
+//     secure: false, // Use `true` for port 465, `false` for all other ports
+//     auth: {
+//       user: "olisahifenna16@gmail.com",
+//       pass: "icndvpcqcbxqoaod",
+//     },
+// });
+
+// // async..await is not allowed in global scope, must use a wrapper
+// async function main(senderemail, receiveremail) {
+//     try {
+//         // send mail with defined transport object
+//         const info = await transporter.sendMail({
+//             from: `"JessConstruct" <${senderemail}>`, // sender address
+//             to: `${receiveremail}`, // list of receivers
+//             subject: "Welcome To Our Product Page", // Subject line
+//             text: "You deserve the best and affordable rides", // plain text body
+//             // html: "<b>Hello world?</b>", // html body
+//         });
+
+//         console.log("Message sent: %s", info.messageId);
+//     } catch (error) {
+//         console.error("Error sending email:", error);
+//     }
+// }
+
+// // Example usage
+// main('olisahifenna16@gmail.com',);
 

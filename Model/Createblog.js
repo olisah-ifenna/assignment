@@ -15,6 +15,17 @@ const CreateSchema = new mongoose.Schema({
         required: true
     },
 
+    number: {
+        type: String,
+        required: false
+    },
+
+    
+    author: {
+        type: String,
+        required: false
+    },
+
     blogCategory: {
         type: String,
         required: true

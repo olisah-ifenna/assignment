@@ -1,0 +1,167 @@
+This code is related to handling file uploads in a Node.js application, specifically for storing uploaded images on the server using the multer middleware. Let's break it down line by line:
+
+const imgPath = path.join(__dirname, 'public/img/uploaded');
+
+Explanation: This line creates a constant imgPath that stores the path where uploaded images will be saved.
+Details:
+path.join(...): This method is used to safely join multiple path segments together. It ensures that the correct path separator (e.g., / on Unix or \ on Windows) is used.
+__dirname: This is a Node.js variable that holds the absolute path of the directory where the current script is located.
+'public/img/uploaded': This is the relative path from the current script's directory to the folder where images will be uploaded.
+Result: imgPath will contain the full absolute path to the uploaded folder inside the public/img directory.
+const storage = multer.diskStorage({
+
+Explanation: This line initializes the storage object using multer.diskStorage, which is a method provided by the multer middleware to configure how files should be stored on disk.
+Details:
+multer.diskStorage(...): This method allows you to specify the destination (where to store the files) and filename (what to name the files) for uploaded files.
+destination: function (req, file, callback) {
+
+Explanation: This line starts defining the destination function, which determines the folder where the uploaded files should be saved.
+Details:
+req: The request object, representing the HTTP request.
+file: The file object, containing details about the uploaded file.
+callback: A function that you call to pass back the destination path.
+callback(null, imgPath);
+
+Explanation: This line calls the callback function, passing null as the first argument (indicating no error) and imgPath as the second argument (the path where the file should be stored).
+Details:
+The first argument of the callback is for error handling. Since there's no error, null is passed.
+imgPath: The path where the file should be stored.
+},
+
+Explanation: This line closes the destination function and prepares for the next configuration option within the diskStorage method.
+filename: function (req, file, callback) {
+
+Explanation: This line starts defining the filename function, which determines the name of the file that will be saved on the disk.
+Details:
+Similar to the destination function, req, file, and callback are used to define how the filename is generated.
+callback(null, file.originalname);
+
+Explanation: This line calls the callback function, passing null (no error) as the first argument and file.originalname as the second argument, which is the name of the uploaded file as provided by the user.
+Details:
+file.originalname: This is the original name of the file that was uploaded by the user.
+Result: The file will be saved with its original name.
+},
+
+Explanation: This line closes the filename function, completing the diskStorage configuration.
+});
+
+Explanation: This line closes the multer.diskStorage object, finalizing the storage configuration.
+const upload = multer({ storage });
+
+Explanation: This line creates an instance of multer middleware called upload, configured to use the storage settings defined earlier.
+Details:
+{ storage }: Passes the storage configuration object to multer, which tells multer to store files on disk using the settings defined earlier.
+In summary, this code sets up a middleware that handles file uploads, saving the uploaded files in a specific directory (public/img/uploaded) and keeping their original filenames.
+
+
+try {
+
+Explanation: This line begins a try block, which is used to handle errors that might occur during the execution of the code within the block.
+Details: If any error occurs within this block, the control will jump to the catch block.
+const result = await cloudinary.uploader.upload(blogimge, { folder: "batch5_construct", });
+
+Explanation: This line uploads an image to Cloudinary, a cloud-based image and video management service.
+Details:
+await: This keyword is used to wait for the asynchronous upload operation to complete before proceeding to the next line.
+cloudinary.uploader.upload(...): This function uploads the image to Cloudinary.
+blogimge: This is the variable containing the image file to be uploaded.
+{ folder: "batch5_construct" }: This specifies the folder in Cloudinary where the image will be stored.
+// verify image size
+
+Explanation: This comment indicates that the next block of code is intended to check the size of the uploaded image.
+if (req.file.size > 2 * 1024 * 1024) {
+
+Explanation: This line checks if the size of the uploaded image exceeds 2 MB.
+Details:
+req.file.size: This retrieves the size of the uploaded file in bytes.
+2 * 1024 * 1024: This is 2 MB converted into bytes (1 MB = 1024 * 1024 bytes).
+Result: If the image size is greater than 2 MB, the condition is true.
+return res.status(400).json({ error: "Image too large" });
+
+Explanation: If the image size exceeds 2 MB, the server responds with a 400 Bad Request status and an error message.
+Details:
+res.status(400): This sets the HTTP status code to 400, indicating a client-side error.
+.json({ error: "Image too large" }): This sends a JSON response with an error message.
+Result: The function exits early, preventing further execution if the image is too large.
+// verify image type
+
+Explanation: This comment indicates that the next block of code is for verifying the type of the uploaded image.
+const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+
+Explanation: This line defines an array allowedTypes that contains the MIME types of the allowed image formats.
+Details:
+The array includes image/png, image/jpeg, and image/jpg.
+if (!allowedTypes.includes(req.file.mimetype)) {
+
+Explanation: This line checks if the uploaded file's MIME type is not included in the allowedTypes array.
+Details:
+req.file.mimetype: This retrieves the MIME type of the uploaded file.
+allowedTypes.includes(...): This checks whether the MIME type is in the allowedTypes array.
+Result: If the MIME type is not allowed, the condition is true.
+return res.status(400).json({ error: "Invalid image type" });
+
+Explanation: If the uploaded image's MIME type is not allowed, the server responds with a 400 Bad Request status and an error message.
+Result: The function exits early, preventing further execution if the image type is invalid.
+const blogimg = result.secure_url;
+
+Explanation: This line assigns the secure_url property from the Cloudinary upload result to the blogimg variable.
+Details:
+result.secure_url: This is the URL of the uploaded image, securely hosted on Cloudinary.
+if (!title || !blogCategory || !blogDescription || !number ||!author) 
+
+Explanation: This line checks if any of the required fields (title, blogCategory, blogDescription, number, or author) are missing.
+Details:
+If any of these variables are falsy (e.g., undefined, null, or an empty string), the condition is true.
+return res.status(400).json({ error: "Fill all required fields" });
+
+Explanation: If any of the required fields are missing, the server responds with a 400 Bad Request status and an error message.
+Result: The function exits early, preventing further execution if any required field is missing.
+const blogExists = await CreateBlog.findOne({ title });
+
+Explanation: This line checks if a blog post with the same title already exists in the database.
+Details:
+await CreateBlog.findOne({ title }): This asynchronously searches the CreateBlog collection for a blog post with the specified title.
+blogExists: This variable will hold the existing blog post if found, or null if not.
+if (blogExists) {
+
+Explanation: This line checks if the blogExists variable is truthy, indicating that a blog post with the same title already exists.
+return res.status(400).json({ error: "Blog already exists" });
+
+Explanation: If a blog post with the same title already exists, the server responds with a 400 Bad Request status and an error message.
+Result: The function exits early, preventing the creation of a duplicate blog post.
+const newBlog = await CreateBlog.create({
+
+Explanation: This line creates a new blog post in the database with the provided data.
+Details:
+await CreateBlog.create({...}): This asynchronously creates a new document in the CreateBlog collection with the specified fields.
+title, blogCategory, blogDescription, blogimg, number, author });
+
+Explanation: These lines provide the data for the new blog post.
+Details:
+title: The title of the blog post.
+blogCategory: The category of the blog post.
+blogDescription: The description of the blog post.
+blogimg: The URL of the uploaded image.
+number: Additional field (purpose unspecified).
+author: The author of the blog post.
+if (newBlog) {
+
+Explanation: This line checks if the new blog post was successfully created.
+res.send("Blog Created Successfully");
+
+Explanation: If the blog post was created, the server responds with a success message.
+Result: The client is notified that the blog post was created successfully.
+} catch (error) {
+
+Explanation: This line begins the catch block, which will execute if any error occurs in the try block.
+console.error(error);
+
+Explanation: This line logs the error to the console for debugging purposes.
+res.status(500).send("Internal Server Error");
+
+Explanation: If an error occurs, the server responds with a 500 Internal Server Error status and a generic error message.
+Result: The client is notified that something went wrong on the server.
+}
+
+Explanation: This line closes the catch block, completing the error-handling process.
+This code snippet handles the process of uploading an image, validating the image, checking for required fields, ensuring no duplicate blog post exists, and then creating a new blog post in the database. If any error occurs during this process, it is caught and an appropriate error message is sent to the client.

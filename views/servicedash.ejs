@@ -8,7 +8,7 @@
 <body>
     <div class="blog-container">
         <div class="blog-grid">
-            <% for(var i = 0; i < services.length; i++) { %>
+            <% for(var i = 0; i <services.length; i++) { %>
         <div class="blog-entry">
             <div class="blog-image-container">
                 <img src="<%= services[i]['blogimg'] %>" alt="" style="width: 100%;">
@@ -17,6 +17,8 @@
                 <h3 class="blog-title"><%= services[i]['title'] %></h3>
                 <h3 class="blog-description"><%= services[i]['blogDescription'] %></h3>
                 <h3 class="blog-category"><%= services[i]['blogCategory'] %></h3>
+                <h3 class="blog-category"><%= services[i]['author'] %></h3>
+                <h3 class="blog-category"><%= services[i]['number'] %></h3>
             </div>
         </div>
         <% } %>
@@ -24,12 +26,3 @@
         </div>    
 </body>
 </html>
-
-<!-- <% for(var i=0; i<services.length; i++) {%>
-    <tr>
-        <td><%= services[i]['title'] %></td>
-        <td><%= services[i]['blogDescription'] %></td>
-        <td><%= services[i]['blogCategory'] %></td>
-        <img src="<%= services[i]['blogimg'] %>" alt="">
-    </tr>    
-<% } %> -->

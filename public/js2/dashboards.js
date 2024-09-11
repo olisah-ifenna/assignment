@@ -16,6 +16,7 @@ create.addEventListener("click", (e)=>{
         <option value="about">About</option>
         <option value="services">Services</option>
         <option value="projects">Projects</option>
+        <option value="blog">Blog</option>
         </select>
 
         <div class="mb-3">
@@ -25,13 +26,13 @@ create.addEventListener("click", (e)=>{
         </div>
 
         <div>
-        <span id="authorr">Author Name</span>
-        
+        <span id="authorr">Author Name</span><br>
+        <input type="text" class="form control" name="author">
         </div>
 
         <div class="mb-3">
-        <label for="author number" class="form-label">Price</label>
-        <input type="number" class="form control" placeholder="Enter Price" name="number">
+        <span id="numberr">Number</span><br>
+        <input type="number" class="form control" name="number">
        
         </div>
         <input type="submit" class="btn btn-primary"></input>
@@ -65,6 +66,19 @@ about.addEventListener("click", function(){
         }
     })   
 })
+
+const blog = document.getElementById("blog");
+blog.addEventListener("click", function(){
+    $.ajax({
+        method : "GET",
+        url : "/blogdash",
+        success : function(data)
+        {
+            console.log($("#form").html(data))
+        }
+    })   
+})
+
 const projects = document.getElementById("projects");
 projects.addEventListener("click", function(){
     $.ajax({
@@ -126,11 +140,11 @@ management.addEventListener("click", function(){
     })   
 })
 
-const title = document.getElementById("title");
-title.addEventListener("click", function(){
+const id = document.getElementById("id");
+id.addEventListener("click", function(){
     $.ajax({
         method : "GET",
-        url : "/del",
+        url : "/deletee",
         success : function(data)
         {
             console.log($("#form").html(data))
@@ -138,8 +152,22 @@ title.addEventListener("click", function(){
     })   
 })
 
-document.getElementsById("formSearch").addEventListener("submit,", function(event){
+document.getElementsById("btnsubmit").addEventListener("submit,", function(event){
     event.preventDefault()
-    const search = document.getElementById("searching");
+    const query = document.getElementById("searchin").value
 
+    fetch(`/search?query=${encodedURIComponent(query)}`)
+    .then(response =>{
+        if(!response.ok){
+            throw new Error('network timeout');
+        }
+        return response.text();
+    })
+    .then(data=>{
+        document.getElementById("forms").innerHTML=data;
+    })
+    .catch(error =>{
+        console.error('interference with fetch:',error);
+        document.getElementById("form").innerHTML=`<p>error interference when searching categories</p>`
+    })
 })

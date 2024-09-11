@@ -9,17 +9,18 @@
 <body>
     <div class="blog-container">
         <div class="blog-grid">
-            <% for(var i=0; i<about.length; i++) {%>
+            <h1>Search results for<% searchit%></h1>
+            <% for(var i = 0; i <look.length; i++) { %>
         <div class="blog-entry">
             <div class="blog-image-container">
-                <img src="<%= about[i]['blogimg'] %>" alt="" style="width: 100%;">
+                <img src="<%= look[i]['blogimg'] %>" alt="" style="width: 100%;">
             </div>
             <div class="text con" style="margin-top: 10%; padding-left: 15%">
-                <h3 class="blog-title"><%= about[i]['title'] %></h3>
-                <h3 class="blog-description"><%= about[i]['blogDescription'] %></h3>
-                <h3 class="blog-category"><%= about[i]['blogCategory'] %></h3>
-                <h3 class="blog-category"><%= about[i]['author'] %></h3>
-                <h3 class="blog-category"><%= about[i]['number'] %></h3>
+                <h3 class="blog-title"><%= look[i]['title'] %></h3>
+                <h3 class="blog-description"><%= look[i]['blogDescription'] %></h3>
+                <h3 class="blog-category"><%= look[i]['blogCategory'] %></h3>
+                <h3 class="blog-category"><%= look[i]['author'] %></h3>
+                <h3 class="blog-category"><%= look[i]['number'] %></h3>
             </div>
         </div>
         <% } %>

@@ -59,6 +59,7 @@
           <li><a href="/contact">Contact</a></li>
           <form action="/logout" method="post">
             <input type="submit" value="Logout">
+            <i class="fa-solid fa-cart-shopping" style="color: black;"></i>
           </form>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -81,6 +82,62 @@
         </nav>
       </div>
     </div><!-- End Page Title -->
+    <script>
+    window.onload = function(){
+      let Productray = JSON.parse(localStorage.getItem("cartitem"))
+      let itemNos = document.getElementById("badge")
+      if(Productray == null || Productray == undefined){
+        itemNos.innerText = 0
+        console.log("no item in the cart")
+    }else{
+      pdtcounts = Productray.length
+      // get item from local localStorage 
+        itemNos.innerText = pdtcounts
+    }
+    let display = document.getElementById('cart')
+      let cart_tray = document.getElementById('tray')
+      display.addEventListener('click', function () {
+        cart_tray.style.display = 'block'
+        let cart_item = document.CreateBlogElement('div');
+        cart_item.setAttribute('class', 'content')
+        cart_item.innerHTML =`<div id="trayHead">
+                              <span class="cancel-icon">&#10060;</span>
+                                <h2>Your Shopping Cart</h2>
+
+                                <div class="checkout">
+                                </div>
+                              <div class="head"></div>
+                              `
+                              for(let i = 0; i <productray.length; i++) {
+                  cart_item.innerHTML +=` <div class="item">
+                    <img src="${productray[i]['blogimg']}"alt="VENDETTA">
+                    <div class="item-details">
+                      <h3>${productray[i]['blogtitle']}"</h3>
+                      <p>Description: ${productray[i]['blogDescription']}</p>
+                      <p class="price">Price: ${productray[i]['authorcontact']}</p>
+                    </div>
+                  </div>`
+                }         
+                    cart_item.innerHTML +=`<a href="/payment"><button type="button">Plave Order</button></a>
+                    <button id="clearCartButton">Clear Cart</button>`
+                      cart_tray.appendChild(cart_item)
+                      clearCartButton.addEventListener('click', ()=> {
+                      //  remove the cart item from local localStorage
+                        localStorage.removeItem('cartitem')
+
+                        location.reload()
+                      })
+                      const cancelicon = cart_item.querySelector('.cancel-icon');
+                      cancelicon.addEventListener('click', ()=>{
+                      //remove the parent div when the cancel icon is clicked
+                      cart_tray.removeChild(cart_item);
+                   })
+        })
+          const clearCartButton = document.getElementById('clearCartButton')
+      //  add event listener to the button
+      
+    }
+      </script>
     <section>
       
     </section>
@@ -99,6 +156,8 @@
               <h3 class="blog-title"><%= services[i]['title'] %></h3>
               <h3 class="blog-description"><%= services[i]['blogDescription'] %></h3>
               <h3 class="blog-category"><%= services[i]['blogCategory'] %></h3>
+              <h3 class="blog-category"><%= services[i]['author'] %></h3>
+              <h3 class="blog-category"><%= services[i]['number'] %></h3>
           </div>
       </div>
       <% } %>
