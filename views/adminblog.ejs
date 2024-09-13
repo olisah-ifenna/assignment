@@ -7,12 +7,30 @@
     <link rel="stylesheet" href="css/general.css">
 </head>
 <body>
-    <% for(var i=0; i<blog.length; i++) {%>
+    <div class="blog-container">
+        <div class="blog-grid">
+            <% for(var i=0; i<blog.length; i++) {%>
+        <div class="blog-entry">
+            <div class="blog-image-container">
+                <img src="<%= blog[i]['blogimg'] %>" alt="" style="width: 100%;">
+            </div>
+            <div class="text con" style="margin-top: 10%; padding-left: 15%">
+                <h3 class="blog-title"><%= blog[i]['title'] %></h3>
+                <h3 class="blog-description"><%= blog[i]['blogDescription'] %></h3>
+                <h3 class="blog-category"><%= blog[i]['blogCategory'] %></h3>
+                <h3 class="author"><%= blog[i]['author'] %></h3>
+                <h3 class="number"><%= blog[i]['number'] %></h3>
+            </div>
+        </div>
+        <% } %>
+        </div>
+        </div>   
+    <!-- <% for(var i=0; i<blog.length; i++) {%>
         <tr>
             <td><%= blog[i]['title'] %></td>
             <td><%= blog[i]['blogDescription'] %></td>
             <img src="<%= blog[i]['blogimg'] %>" alt="">
         </tr>    
-    <% } %>
+    <% } %> -->
 </body>
 </html>

@@ -207,7 +207,7 @@ server.post("/blog", upload.single("imgupload"), async (req, res) => {
         });
 
         if (newBlog) {
-            res.render("Admin");
+            res.render("admindash/index");
         }
     } catch (error) {
         console.error(error);
@@ -304,7 +304,9 @@ server.post("/delete", async (req, res) => {
     }).catch(err => console.error(err));
 });
 
-
+server.get("/cart", (req, res)=>{
+    res.render("cart")
+})
 
 server.get("/deletee", async (req, res)=>{
     const dblog = CreateBlog.find()

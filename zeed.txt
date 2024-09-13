@@ -64,7 +64,7 @@ HTTP used to indicate the action an API client will perform
 application programming interface: allows different systems to communicate and share data
 http request: used to retrieve data from API, fetch html from website
 
-promises are object that represent the eventual completion or failure of an asynchronous operational
+promises are object that represent the eventual completion or failure of an asynchronous operation
 
 findOne:returns only one document that satisfies the criteria entered
 find: returns all occurrences in the selection
