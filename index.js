@@ -192,10 +192,10 @@ server.post("/blog", upload.single("imgupload"), async (req, res) => {
             return res.status(400).json({ error: "Fill all required fields" });
         }
 
-        const blogExists = await CreateBlog.findOne({ title });
-        if (blogExists) {
-            return res.status(400).json({ error: "Blog already exists" });
-        }
+        // const blogExists = await CreateBlog.findOne({ title });
+        // if (blogExists) {
+        //     return res.status(400).json({ error: "Blog already exists" });
+        // }
 
         const newBlog = await CreateBlog.create({
             title,
